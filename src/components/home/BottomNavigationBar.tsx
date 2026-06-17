@@ -1,5 +1,5 @@
+import { router, usePathname } from "expo-router";
 import { BadgeCheck, BookOpenCheck, Home, User } from "lucide-react-native";
-import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type TabName = "Home" | "Courses" | "Premium" | "You";
@@ -7,57 +7,65 @@ type TabName = "Home" | "Courses" | "Premium" | "You";
 type NavItem = {
   name: TabName;
   icon: React.ElementType;
-};
-
-type BottomNavigationBarProps = {
-  onTabPress?: (tab: TabName) => void;
+  path: "/" | "/courses" | "/profile" | "/premium";
 };
 
 const navItems: NavItem[] = [
   {
     name: "Home",
     icon: Home,
+    path: "/",
   },
   {
     name: "Courses",
     icon: BookOpenCheck,
+    path: "/courses",
   },
   {
     name: "Premium",
     icon: BadgeCheck,
+    path: "/premium",
   },
   {
     name: "You",
     icon: User,
+    path: "/profile",
   },
 ];
 
-// this is the bottom navigation bar
-// I made it reusable so the home screen does not get messy
+type BottomNavigationBarProps = {
+  onTabPress?: (tab: string) => void;
+  activeTab?: string;
+};
+
 export default function BottomNavigationBar({
   onTabPress,
+  activeTab = "Home",
 }: BottomNavigationBarProps) {
-  const [activeTab, setActiveTab] = useState<TabName>("Home");
+  const pathname = usePathname();
 
-  // this changes the active button and also runs whatever function the screen sends
-  function handlePress(tab: TabName) {
-    setActiveTab(tab);
-
-    if (onTabPress) {
-      onTabPress(tab);
+  function handlePress(
+    tab: TabName,
+    path: "/" | "/courses" | "/profile" | "/premium",
+  ) {
+    if (tab === "Premium") {
+      alert("Premium page is not ready yet");
+      return;
     }
+
+    router.navigate(path as "/" | "/courses" | "/profile");
   }
 
   return (
     <View style={styles.container}>
       {navItems.map((item) => {
-        const isActive = activeTab === item.name;
+        const isActive = pathname === item.path;
         const Icon = item.icon;
 
         return (
           <Pressable
             key={item.name}
-            onPress={() => handlePress(item.name)}
+            onPress={() => handlePress(item.name, item.path)}
             style={styles.navItem}
           >
             <View style={[styles.pill, isActive && styles.activePill]}>
