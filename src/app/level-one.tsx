@@ -1,6 +1,5 @@
 import { router } from "expo-router";
-import { Platform, StyleSheet, View } from "react-native";
-import BottomNavigationBar from "../components/home/BottomNavigationBar";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import CourseCarousel from "../components/home/CourseCarousel";
 import StatBadge from "../components/home/StatBadge";
 import { courseSections } from "../data/courseSections";
@@ -14,23 +13,6 @@ export default function HomeScreen() {
       pathname: "/roadmap",
       params: { sectionId: section.id },
     });
-  }
-
-  // this is temporary until the other tab screens are ready
-  // for now it proves the bottom buttons actually do something
-  function handleTabPress(tab: string) {
-    if (tab === "Home") {
-      console.log("Home button pressed");
-      return;
-    }
-
-    const message = `${tab} button pressed`;
-
-    if (Platform.OS === "web") {
-      globalThis.alert(message);
-    } else {
-      console.log(message);
-    }
   }
 
   return (
@@ -49,8 +31,27 @@ export default function HomeScreen() {
           onStartPress={handleStartSection}
         />
 
-        {/* this is the bottom navigation bar component */}
-        <BottomNavigationBar onTabPress={handleTabPress} />
+        {/* this is just the bottom navigation mockup for now */}
+        <View style={styles.bottomTabs}>
+          <Pressable style={styles.activeTab}>
+            <Text style={styles.activeTabIcon}>⌂</Text>
+          </Pressable>
+
+          <Pressable style={styles.tabItem}>
+            <Text style={styles.tabIcon}>▣</Text>
+            <Text style={styles.tabText}>Courses</Text>
+          </Pressable>
+
+          <Pressable style={styles.tabItem}>
+            <Text style={styles.tabIcon}>♙</Text>
+            <Text style={styles.tabText}>Premium</Text>
+          </Pressable>
+
+          <Pressable style={styles.tabItem}>
+            <Text style={styles.tabIcon}>♙</Text>
+            <Text style={styles.tabText}>You</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -77,5 +78,48 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 26,
     marginBottom: 8,
+  },
+
+  bottomTabs: {
+    height: 92,
+    backgroundColor: "#111111",
+    borderTopWidth: 1,
+    borderTopColor: "#1f1f1f",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingBottom: 12,
+  },
+
+  activeTab: {
+    width: 58,
+    height: 44,
+    borderRadius: 24,
+    backgroundColor: "#2b2b2b",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  activeTabIcon: {
+    color: "white",
+    fontSize: 30,
+    fontWeight: "900",
+  },
+
+  tabItem: {
+    alignItems: "center",
+    gap: 4,
+  },
+
+  tabIcon: {
+    color: "#8a8a8a",
+    fontSize: 28,
+    fontWeight: "900",
+  },
+
+  tabText: {
+    color: "#8a8a8a",
+    fontSize: 14,
+    fontWeight: "800",
   },
 });
