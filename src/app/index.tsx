@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { Platform, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import BottomNavigationBar from "../components/home/BottomNavigationBar";
 import CourseCarousel from "../components/home/CourseCarousel";
 import StatBadge from "../components/home/StatBadge";
@@ -20,16 +20,19 @@ export default function HomeScreen() {
   // for now it proves the bottom buttons actually do something
   function handleTabPress(tab: string) {
     if (tab === "Home") {
-      console.log("Home button pressed");
-      return;
+      router.push("/");
     }
 
-    const message = `${tab} button pressed`;
+    if (tab === "Courses") {
+      router.push("/courses");
+    }
 
-    if (Platform.OS === "web") {
-      globalThis.alert(message);
-    } else {
-      console.log(message);
+    if (tab === "You") {
+      router.push("/profile");
+    }
+
+    if (tab === "Premium") {
+      console.log("Premium button pressed");
     }
   }
 
@@ -50,7 +53,7 @@ export default function HomeScreen() {
         />
 
         {/* this is the bottom navigation bar component */}
-        <BottomNavigationBar onTabPress={handleTabPress} />
+        <BottomNavigationBar />
       </View>
     </View>
   );
