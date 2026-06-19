@@ -13,7 +13,7 @@ export default function RoadmapScreen() {
 
   // this will connect to my classmate first level screen later
   function openFirstLevel() {
-    router.push("/level-one");
+    router.push("/level" as any);
   }
 
   return (
