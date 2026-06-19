@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { Calculator } from "lucide-react-native";
 import { StyleSheet, Text, View } from "react-native";
 import CategoryPill from "../components/courses/CategoryPill";
 import CoursePath from "../components/courses/CoursePath";
@@ -33,8 +34,14 @@ export default function CoursesScreen() {
         </View>
 
         <View style={styles.header}>
-          <Text style={styles.title}>Math Foundations</Text>
-          <Text style={styles.subtitle}>Strengthen your math fundamentals</Text>
+          <View>
+            <Text style={styles.title}>Math Foundations</Text>
+            <Text style={styles.subtitle}>
+              Strengthen your math fundamentals
+            </Text>
+          </View>
+
+          <Calculator size={72} strokeWidth={2.5} color="#4f78ff" />
         </View>
 
         <CoursePath />
@@ -65,6 +72,9 @@ const styles = StyleSheet.create({
   },
 
   header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 24,
     paddingVertical: 18,
     backgroundColor: "#071026",

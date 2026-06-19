@@ -3,12 +3,19 @@ import { StyleSheet, Text, View } from "react-native";
 type CourseCardProps = {
   title: string;
   isNew?: boolean;
+  icon: React.ElementType;
 };
 
-export default function CourseCard({ title, isNew }: CourseCardProps) {
+export default function CourseCard({
+  title,
+  isNew,
+  icon: Icon,
+}: CourseCardProps) {
   return (
     <View style={styles.courseCard}>
-      <View style={styles.iconPlaceholder} />
+      <View style={styles.iconBox}>
+        <Icon size={46} strokeWidth={2.8} color="#4f78ff" />
+      </View>
 
       <Text style={styles.courseTitle}>{title}</Text>
 
@@ -31,11 +38,11 @@ const styles = StyleSheet.create({
     gap: 16,
   },
 
-  iconPlaceholder: {
-    width: 50,
-    height: 50,
-    borderRadius: 12,
-    backgroundColor: "#4f78ff",
+  iconBox: {
+    width: 60,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   courseTitle: {
