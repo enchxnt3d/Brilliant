@@ -1,36 +1,19 @@
-import { router } from "expo-router";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import BottomNavigationBar from "../components/home/BottomNavigationBar";
 import LeagueCard from "../components/profile/LeagueCard";
 import ProfileHeader from "../components/profile/ProfileHeader";
 import StatCard from "../components/profile/StatCard";
+import { useTheme } from "../context/ThemeContext";
 
 export default function ProfileScreen() {
-  function handleTabPress(tab: string) {
-    if (tab === "Home") {
-      router.push("/");
-    }
-
-    if (tab === "Courses") {
-      router.push("/courses");
-    }
-
-    if (tab === "You") {
-      router.push("/profile");
-    }
-
-    if (tab === "Premium") {
-      console.log("Premium button pressed");
-    }
-  }
+  const { isDark, toggleTheme, themeName } = useTheme();
 
   return (
-    <View style={styles.page}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <ProfileHeader name="John Doe" initial="J" />
+    <View style={[styles.page, !isDark && styles.lightPage]}>
+      <View style={styles.container}>
+        <View style={styles.headerRow}>
+          <ProfileHeader name="John Doe" initial="J" />
+        </View>
 
         <View style={styles.statsRow}>
           <StatCard value="⚡ 0" label="Streak" />
@@ -38,9 +21,9 @@ export default function ProfileScreen() {
         </View>
 
         <LeagueCard />
-      </ScrollView>
+      </View>
 
-      <BottomNavigationBar onTabPress={handleTabPress} activeTab="You" />
+      <BottomNavigationBar activeTab="You" />
     </View>
   );
 }
@@ -51,13 +34,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#111111",
   },
 
+  lightPage: {
+    backgroundColor: "#ececec",
+  },
+
   container: {
     flex: 1,
     paddingHorizontal: 24,
     paddingTop: 48,
-  },
-
-  contentContainer: {
     paddingBottom: 100,
   },
 
@@ -65,5 +49,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 16,
     marginBottom: 22,
+  },
+
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
   },
 });
