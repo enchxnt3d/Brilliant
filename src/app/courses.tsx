@@ -4,8 +4,10 @@ import { StyleSheet, Text, View } from "react-native";
 import CategoryPill from "../components/courses/CategoryPill";
 import CoursePath from "../components/courses/CoursePath";
 import BottomNavigationBar from "../components/home/BottomNavigationBar";
+import { useTheme } from "../context/ThemeContext";
 
 export default function CoursesScreen() {
+  const { isDark } = useTheme();
   function handleTabPress(tab: string) {
     if (tab === "Home") {
       router.push("/");
@@ -25,7 +27,7 @@ export default function CoursesScreen() {
   }
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, !isDark && styles.lightPage]}>
       <View style={styles.container}>
         <View style={styles.categoryRow}>
           <CategoryPill title="Math" active />
@@ -33,10 +35,12 @@ export default function CoursesScreen() {
           <CategoryPill title="Algebra" />
         </View>
 
-        <View style={styles.header}>
+        <View style={[styles.header, !isDark && styles.lightHeader]}>
           <View>
-            <Text style={styles.title}>Math Foundations</Text>
-            <Text style={styles.subtitle}>
+            <Text style={[styles.title, !isDark && styles.lightTitle]}>
+              Math Foundations
+            </Text>
+            <Text style={[styles.subtitle, !isDark && styles.lightSubtitle]}>
               Strengthen your math fundamentals
             </Text>
           </View>
@@ -90,5 +94,20 @@ const styles = StyleSheet.create({
     color: "#aaaaaa",
     fontSize: 16,
     marginTop: 4,
+  },
+  lightPage: {
+    backgroundColor: "#ececec",
+  },
+
+  lightHeader: {
+    backgroundColor: "#f2f2f2",
+  },
+
+  lightTitle: {
+    color: "#111111",
+  },
+
+  lightSubtitle: {
+    color: "#555555",
   },
 });

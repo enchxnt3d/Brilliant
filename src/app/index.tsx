@@ -3,10 +3,12 @@ import { StyleSheet, View } from "react-native";
 import BottomNavigationBar from "../components/home/BottomNavigationBar";
 import CourseCarousel from "../components/home/CourseCarousel";
 import StatBadge from "../components/home/StatBadge";
+import { useTheme } from "../context/ThemeContext";
 import { courseSections } from "../data/courseSections";
 import type { CourseSection } from "../types/course";
 
 export default function HomeScreen() {
+  const { isDark } = useTheme();
   // this sends the selected course section to the roadmap screen
   // the sectionId is passed so the roadmap knows what course section was clicked
   function handleStartSection(section: CourseSection) {
@@ -37,9 +39,9 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, !isDark && styles.lightPage]}>
       {/* this keeps the app looking like a phone when I test it on web */}
-      <View style={styles.phoneScreen}>
+      <View style={[styles.phoneScreen, !isDark && styles.lightPhoneScreen]}>
         {/* top stats like Brilliant */}
         <View style={styles.topRow}>
           <StatBadge value="2" icon="🔑" iconColor="#ffcc24" />
@@ -80,5 +82,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 26,
     marginBottom: 8,
+  },
+
+  lightPage: {
+    backgroundColor: "#ececec",
+  },
+
+  lightPhoneScreen: {
+    backgroundColor: "#ececec",
   },
 });

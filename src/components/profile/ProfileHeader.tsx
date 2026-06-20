@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useTheme } from "../../context/ThemeContext";
 
 type ProfileHeaderProps = {
   name: string;
@@ -6,6 +7,8 @@ type ProfileHeaderProps = {
 };
 
 export default function ProfileHeader({ name, initial }: ProfileHeaderProps) {
+  const { themeName, toggleTheme } = useTheme();
+
   return (
     <View style={styles.profileHeader}>
       <View style={styles.avatar}>
@@ -13,6 +16,12 @@ export default function ProfileHeader({ name, initial }: ProfileHeaderProps) {
       </View>
 
       <Text style={styles.name}>{name}</Text>
+
+      <Pressable style={styles.themeButton} onPress={toggleTheme}>
+        <Text style={styles.themeButtonText}>
+          {themeName === "dark" ? "Light" : "Dark"}
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -21,7 +30,7 @@ const styles = StyleSheet.create({
   profileHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 30,
+    marginBottom: 10,
   },
 
   avatar: {
@@ -44,6 +53,18 @@ const styles = StyleSheet.create({
     flex: 1,
     color: "white",
     fontSize: 26,
+    fontWeight: "800",
+  },
+
+  themeButton: {
+    backgroundColor: "#4f78ff",
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+
+  themeButtonText: {
+    color: "white",
     fontWeight: "800",
   },
 });
